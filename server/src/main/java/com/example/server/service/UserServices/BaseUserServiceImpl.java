@@ -37,8 +37,12 @@ public abstract class BaseUserServiceImpl<T extends User> implements BaseUserSer
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
+//        user.setSubscription("free");
+//        user.setSubscriptionExpiry(LocalDate.now().plusYears(100));
+
         user.setSubscription("free");
-        user.setSubscriptionExpiry(LocalDate.now().plusYears(100));
+        user.setSubscriptionType(null);
+        user.setSubscriptionExpiry(null);
 
         repository.save(user);
 
@@ -65,6 +69,10 @@ public abstract class BaseUserServiceImpl<T extends User> implements BaseUserSer
 
     @Override
     public void upgradeSubscription(String email, String planId) {
+
+        System.out.println("upgradeSubscription called with:");
+        System.out.println("Email = " + email);
+        System.out.println("PlanId = " + planId);
 
         Optional<T> optionalUser = Optional.ofNullable(repository.findByEmail(email));
         if (optionalUser.isEmpty()) {

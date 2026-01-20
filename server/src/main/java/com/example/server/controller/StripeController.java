@@ -73,7 +73,7 @@ public class StripeController {
 
                 if (session != null) {
 
-                    String email = session.getMetadata() != null ? session.getMetadata().get("userEmail") : null;
+                    String email = session.getCustomerDetails() != null ? session.getCustomerDetails().getEmail() : null;
                     String planId = session.getMetadata() != null ? session.getMetadata().get("planId") : null;
 
                     userService.upgradeSubscription(email, planId);
