@@ -50,14 +50,18 @@ public class PatientController {
                     .body(Map.of("error", "User not found"));
         }
 
-        Map<String, String> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
 
         response.put("subscriptionStatus", user.getSubscription());
         response.put("subscriptionType", user.getSubscriptionType());
-        response.put("subscriptionExpiry", user.getSubscriptionExpiry().toString());
+        response.put(
+                "subscriptionExpiry",
+                user.getSubscriptionExpiry() != null
+                        ? user.getSubscriptionExpiry().toString()
+                        : null
+        );
 
         return ResponseEntity.ok(response);
-
     }
 
     @GetMapping("/{id}")
